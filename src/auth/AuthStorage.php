@@ -7,8 +7,5 @@ function GetToken() {
 }
 
 function SetToken($token) {
-  setcookie(tokenName, $token, [
-    'httponly' => true,
-    'expires' => time() + 60*60*24*30
-  ]);
+  setcookie(tokenName, $token, time() + 60*60*24*30, "", "", false, true);
 }

@@ -22,11 +22,14 @@ class UserRepository {
   public function GetByLoginAndPass($login, $pass) {
     $query = $this->pdo->prepare("SELECT * FROM users WHERE login=:login AND password=:password LIMIT 1");
 
-    if ($query->execute([
+    $execResult = $query->execute([
       "login" => $login,
       "password" => $pass
-    ])) {
-      return $query->fetch();
+    ]);
+
+    if ($execResult) {
+      $result = $query->fetch();
+      return $result;
     }
 
     return null;

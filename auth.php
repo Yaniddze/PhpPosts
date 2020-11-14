@@ -4,10 +4,10 @@
   require_once "./src/validations/PasswordValidation.php";
 
   if(CheckAuth()) {
-    header('Location index.php');
+    header('Location: index.php');
   }
 
-  if (isset($_POST["login"]) {
+  if (isset($_POST["login"])) {
     $login = $_POST["login"];
     $password = $_POST["password"];
 
@@ -25,11 +25,11 @@
     if (!isset($error)) {
       $foundUser = $userRepository->GetByLoginAndPass($login, $password);
 
-      if (is_null($foundUser)) {
+      if ($foundUser == null) {
         $error = 'Пользователь с такими данными не найден';
       } else {
         SetToken($foundUser["id"]);
-        header('Location index.php');
+        header('Location: index.php');
       }
     }
   }
@@ -54,9 +54,11 @@
         <input name="login" type="text" class="form-control" id="login-input"/>
       </div>
       <div class="form-group">
-        <label for="password-input">Login</label>
+        <label for="password-input">Password</label>
         <input name="password" type="password" class="form-control" id="password-input"/>
       </div>
+
+      <button type="submit" class="btn btn-primary">Войти</button>
     </form>
   </div>
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

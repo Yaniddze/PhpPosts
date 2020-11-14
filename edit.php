@@ -1,8 +1,12 @@
 <?php 
-  require_once "./src/db/Connection.php";
+  require_once "./src/auth/CheckAuth.php";
   require_once "./src/validations/DescriptionValidation.php";
   require_once "./src/validations/TitleValidation.php";
   require_once "./src/validations/PhotoValidation.php";
+
+  if (!CheckAuth()) {
+    header('Location: auth.php');
+  }
 
   if (isset($_GET["id"]) && $_GET["id"] > 0) {
     $tempPost = $postRepository->GetById($_GET["id"]);

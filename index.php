@@ -1,5 +1,9 @@
 <?php 
-  require_once "./src/db/Connection.php";
+  require_once "./src/auth/CheckAuth.php";
+
+  if (!CheckAuth()) {
+    header('Location: auth.php');
+  }
 ?>
 <!DOCTYPE html>
 <html lang="en">
