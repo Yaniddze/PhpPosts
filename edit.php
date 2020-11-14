@@ -5,7 +5,13 @@
   require_once "./src/validations/PhotoValidation.php";
 
   if (isset($_GET["id"]) && $_GET["id"] > 0) {
-    $post = $postRepository->GetById($_GET["id"]);
+    $tempPost = $postRepository->GetById($_GET["id"]);
+
+    if (is_null($tempPost)) {
+      $error = 'Пост не найден';
+    } else {
+      $post = $tempPost;
+    }
   }
 
   if (isset($_POST['delete']) && isset($post)) {

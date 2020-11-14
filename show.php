@@ -2,8 +2,15 @@
   require_once "./src/db/Connection.php";
 
   if (isset($_GET["id"]) && $_GET["id"] > 0) {
-    $post = $postRepository->GetById($_GET["id"]);
+    $tempPost = $postRepository->GetById($_GET["id"]);
+
+    if (is_null($tempPost)) {
+      $error = 'Пост не найден';
+    } else {
+      $post = $tempPost;
+    }
   }
+  
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -30,6 +37,10 @@
       </a>
     </div>
     <?php 
+
+      if (isset($error)) {
+        echo '<div class="alert alert-danger" role="alert">'.$error.'</div>';
+      }
 
       if (isset($post)) {
         echo '<div>';
