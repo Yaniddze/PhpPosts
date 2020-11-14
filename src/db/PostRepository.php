@@ -23,7 +23,7 @@ class PostRepository {
     $execResult = $query->execute([
       "title" => $data["title"],
       "description" => $data["description"],
-      "created_time" => $data["created_time"],
+      "created_time" => date('Y-m-d H:i:s'),
       "photo" => $data["photo"],
     ]);
 
