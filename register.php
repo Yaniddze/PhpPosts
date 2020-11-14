@@ -11,6 +11,7 @@
   if (isset($_POST["login"])) {
     $login = $_POST["login"];
     $password = $_POST["password"];
+    $passwordConfirm = $_POST["password-confirm"];
 
     $loginValidation = ValidateLogin($login);
     $passwordValidation = ValidatePassword($password);
@@ -23,13 +24,22 @@
       $error = $passwordValidation['message'];
     }
 
-    if (!isset($error)) {
-      $foundUser = $userRepository->GetByLoginAndPass($login, $password);
+    if ($password != $passwordConfirm) {
+      $error = 'Пароли не совпадают';
+    }
 
-      if ($foundUser == null) {
-        $error = 'Пользователь с такими данными не найден';
+    if (!isset($error)) {
+      $exist = $userRepository->CheckExist($login);
+
+      if ($exist) {
+        $error = 'Пользователь с такими данными уже зарегистрирован';
       } else {
-        SetToken($foundUser["id"]);
+        $id = $userRepository->Insert([
+          "login" => $login,
+          "password" => $password,
+        ]);
+        
+        SetToken($id);
         header('Location: index.php');
       }
     }
@@ -39,7 +49,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Auth</title>
+  <title>Register</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
 </head>
 <body>
@@ -58,9 +68,13 @@
         <label for="password-input">Password</label>
         <input name="password" type="password" class="form-control" id="password-input"/>
       </div>
+      <div class="form-group">
+        <label for="password-confirm-input">Password confirm</label>
+        <input name="password-confirm" type="password" class="form-control" id="password-confirm-input"/>
+      </div>
 
-      <button type="submit" class="btn btn-primary">Войти</button>
-      <a class="btn btn-primary" href="register.php">Регистрация</a>
+      <button type="submit" class="btn btn-primary">Регистрация</button>
+      <a class="btn btn-primary" href="register.php">Войти</a>
     </form>
   </div>
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

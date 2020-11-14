@@ -19,6 +19,21 @@ class UserRepository {
     return null;
   }
 
+  public function CheckExist($login) {
+    $query = $this->pdo->prepare("SELECT * FROM users WHERE login=:login LIMIT 1");
+
+    $execResult = $query->execute([
+      "login" => $login
+    ]);
+
+    if ($execResult) {
+      $result = $query->fetch();
+      return $result != null;
+    }
+
+    return false;
+  }
+
   public function GetByLoginAndPass($login, $pass) {
     $query = $this->pdo->prepare("SELECT * FROM users WHERE login=:login AND password=:password LIMIT 1");
 

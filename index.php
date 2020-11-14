@@ -1,7 +1,8 @@
 <?php 
-  require_once "./src/auth/CheckAuth.php";
+  require_once "./src/db/Connection.php";
+  require_once "./src/CheckAuth.php";
 
-  if (!CheckAuth()) {
+  if (!CheckAuth($userRepository)) {
     header('Location: auth.php');
   }
 ?>
