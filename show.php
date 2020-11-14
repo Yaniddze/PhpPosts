@@ -1,6 +1,7 @@
 <?php 
   require_once "./src/CheckAuth.php";
   require_once "./src/db/Connection.php";
+  require_once "./src/validations/CommentValidation.php";
 
   if (!CheckAuth($userRepository)) {
     header('Location: auth.php');
@@ -19,6 +20,24 @@
       $error = 'Пост не найден';
     } else {
       $post = $tempPost;
+    }
+  }
+
+  if (isset($post) && isset($_POST["comment"])) {
+    $comment = $_POST["comment"];
+
+    $commentValidation = ValidateComment($comment);
+
+    if (!$commentValidation["valid"]) {
+      $error = $commentValidation["message"];
+    }
+
+    if (!isset($error)) {
+      $commentRepository->Insert([
+        "post_id" => $post["id"],
+        "author_id" => GetToken(),
+        "text" => $comment,
+      ]);
     }
   }
   
@@ -89,6 +108,37 @@
       }
 
     ?>
+    <div>
+      <h2>Комментарии</h2>
+      <form method="post" class="mb-4">
+        <div class="form-group">
+          <label for="comment-input">Оставьте свой комментарий</label>
+          <textarea name="comment" class="form-control" id="comment-input"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">
+          Отправить
+        </button>
+      </form>
+      <?php 
+        if (isset($post)) {
+          $comments = $commentRepository->GetByPost($post["id"]);
+
+          if ($comments != null) {
+            foreach($comments as $comment) {
+              echo '<div>';
+  
+              echo '<div class="d-flex">';
+                echo '<h4>'.$comment["login"].'</h4>';
+                echo '<div class="ml-2 mt-1">'.$comment["time"].'</div>';
+              echo '</div>';
+              echo '<p style="word-wrap:break-word;">'.$comment["text"].'</p>';
+    
+              echo '</div>';
+            }
+          }          
+        }
+      ?>
+    </div>
   </div>
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
