@@ -11,6 +11,12 @@
 
     header('Location: auth.php');
   }
+
+  $pattern = $_GET["pattern"];
+
+  if (!isset($pattern) || strlen($pattern) == 0) {
+    header('Location: index.php');
+  }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,24 +31,24 @@
     <form class="float-right m-1" method="post">
       <button type="submit" name="exit" class="btn btn-danger">Выйти</button>
     </form>
-    <form action="./search.php">
+    <form>
       <div class="d-flex mb-5">
-        <input name="pattern" placeholder="Поиск..." />
+        <input name="pattern" value="<?php echo $pattern; ?>" placeholder="Поиск..." />
         <button class="btn btn-primary ml-2">Найти</button>
       </div>
     </form>
     <div>
       <a 
-        href="./newPost.php"
+        href="./index.php"
         class="m-1 btn btn-primary"
       >
-        Добавить пост
+        Домой
       </a>
     </div>
     <div class="row row-cols-2">
       
       <?php 
-        $posts = $postRepository->GetAll();
+        $posts = $postRepository->Search($pattern);
 
         if ($posts != null) {
           foreach ($posts as $post) {
@@ -58,7 +64,9 @@
               echo '<a class="btn btn-primary mr-3" href="./edit.php?id='.$post["id"].'">Редактировать</a>';
             }
             echo '<a class="btn btn-primary mr-3" href="./show.php?id='.$post["id"].'">Подробнее</a>';
+  
             
+  
             echo '</div>';
   
             echo '</div>';

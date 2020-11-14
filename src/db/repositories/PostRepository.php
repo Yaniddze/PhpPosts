@@ -7,6 +7,18 @@ class PostRepository {
     $this->pdo = $pdo;
   }
 
+  public function Search($pattern) {
+    $query = $this->pdo->prepare('SELECT * FROM posts WHERE title LIKE "%'.$pattern.'%"');
+  
+    if ($query->execute()) {
+      return $query->fetchAll();
+    }
+
+    echo 'error';
+
+    return null;
+  }
+
   public function GetById($id) {
     $query = $this->pdo->prepare("SELECT * FROM posts WHERE id=:id ORDER BY created_time LIMIT 1");
 
