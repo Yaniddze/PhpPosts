@@ -30,13 +30,14 @@ class PostRepository {
   }
 
   public function Insert($data) {
-    $query = $this->pdo->prepare("INSERT INTO posts(title, description, created_time, photo) VALUES (:title, :description, :created_time, :photo)");
+    $query = $this->pdo->prepare("INSERT INTO posts(title, description, created_time, photo, user_id) VALUES (:title, :description, :created_time, :photo, :user_id)");
 
     $execResult = $query->execute([
       "title" => $data["title"],
       "description" => $data["description"],
       "created_time" => date('Y-m-d H:i:s'),
       "photo" => $data["photo"],
+      "user_id" => $data["user_id"]
     ]);
 
     if($execResult) {
