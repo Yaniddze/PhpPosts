@@ -1,32 +1,28 @@
 <?php 
   require_once "./src/db/Connection.php";
+  require_once "./src/validations/DescriptionValidation.php";
+  require_once "./src/validations/TitleValidation.php";
+  require_once "./src/validations/PhotoValidation.php";
 
   if (isset($_POST['title'])) {
     $title = $_POST['title'];
     $description = $_POST['description'];
     $photo = $_POST['photo'];
 
-    if (
-      is_null($description) 
-      || strlen($description) <= 3
-    ) {
-      $error = "Плохая ссылка на фото";
+    $titleValidation = ValidateTitle($title);
+    $descriptionValidation = ValidateDescription($description);
+    $photoValidation = ValidatePhoto($photo);
+
+    if (!$titleValidation['valid']) {
+      $error = $titleValidation['message'];
     }
 
-    if (
-      is_null($title) 
-      || strlen($title) >= 30
-      || strlen($title) <= 3
-    ) {
-      $error = "Плохое название";
+    if (!$descriptionValidation['valid']) {
+      $error = $descriptionValidation['messsage'];
     }
 
-    if (
-      is_null($photo) 
-      || strlen($photo) >= 150
-      || strlen($photo) <= 5
-    ) {
-      $error = "Плохая ссылка на фото";
+    if (!$photoValidation['valid']) {
+      $error = $photoValidation['message'];
     }
 
     if (!isset($error)) {
@@ -49,6 +45,7 @@
 </head>
 <body>
   <div class="container">
+    <h1>Добавление</h1>
     <div>
       <a 
         href="./index.php"

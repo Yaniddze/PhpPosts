@@ -31,7 +31,7 @@
 
         echo '<h5 class="cart-title">'.$post['title'].'</h5>';
         echo '<p class="card-text">'.$post['description'].'</p>';
-        echo '<a class="btn btn-primary mr-3">Обновить</a>';
+        echo '<a class="btn btn-primary mr-3" href="./edit.php?id='.$post["id"].'">Обновить</a>';
         echo '<a class="btn btn-danger">Удалить</a>';
 
         echo '</div>';

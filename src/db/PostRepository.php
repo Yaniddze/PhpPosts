@@ -7,6 +7,18 @@ class PostRepository {
     $this->pdo = $pdo;
   }
 
+  public function GetById($id) {
+    $query = $this->pdo->prepare("SELECT * FROM posts WHERE id=:id ORDER BY created_time LIMIT 1");
+
+    if ($query->execute([
+      "id" => $id
+    ])) {
+      return $query->fetch();
+    }
+
+    return null;
+  }
+
   public function GetAll() {
     $query = $this->pdo->prepare("SELECT * FROM posts ORDER BY created_time");
 
@@ -29,6 +41,18 @@ class PostRepository {
 
     if($execResult) {
       return $this->pdo->lastInsertId();
+    }
+
+    return -1;
+  }
+
+  public function Update($data) {
+    $query = $this->pdo->prepare("UPDATE posts SET title=:title, description=:description, photo=:photo WHERE id=:id");
+
+    $execResult = $query->execute($data);
+
+    if ($execResult) {
+      return 1;
     }
 
     return -1;
