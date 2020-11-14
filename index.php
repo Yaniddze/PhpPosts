@@ -37,8 +37,12 @@
 
           echo '<h5 class="cart-title">'.$post['title'].'</h5>';
           echo '<p class="card-text">'.$post['description'].'</p>';
-          echo '<a class="btn btn-primary mr-3" href="./edit.php?id='.$post["id"].'">Редактировать</a>';
+          if ($post["user_id"] == GetToken()) {
+            echo '<a class="btn btn-primary mr-3" href="./edit.php?id='.$post["id"].'">Редактировать</a>';
+          }
           echo '<a class="btn btn-primary mr-3" href="./show.php?id='.$post["id"].'">Подробнее</a>';
+
+          
 
           echo '</div>';
 

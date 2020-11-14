@@ -15,7 +15,11 @@
     if (is_null($tempPost)) {
       $error = 'Пост не найден';
     } else {
-      $post = $tempPost;
+      if ($tempPost["user_id"] == GetToken()) {
+        $post = $tempPost;
+      } else {
+        $error = "Это не ваш пост";
+      }
     }
   }
 

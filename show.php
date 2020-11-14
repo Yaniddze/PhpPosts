@@ -1,5 +1,10 @@
 <?php 
+  require_once "./src/CheckAuth.php";
   require_once "./src/db/Connection.php";
+
+  if (!CheckAuth($userRepository)) {
+    header('Location: auth.php');
+  }
 
   if (isset($_GET["id"]) && $_GET["id"] > 0) {
     $tempPost = $postRepository->GetById($_GET["id"]);
@@ -29,12 +34,17 @@
       >
         Домой
       </a>
-      <a 
-        <?php echo 'href="./edit.php?id='.$_GET["id"].'"'; ?>
-        class="m-1 btn btn-primary"
-      >
-        Редактировать
-      </a>
+      <?php 
+      
+      if (isset($post)) {
+        if ($post["user_id"] == GetToken()) {
+          echo '<a href="./edit.php?id='.$_GET["id"].'" class="m-1 btn btn-primary" >';
+          echo 'Редактировать';
+          echo '</a>';
+        }
+      }    
+
+      ?>
     </div>
     <?php 
 

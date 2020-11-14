@@ -1,9 +1,17 @@
 <?php 
+  require_once "./src/CheckAuth.php";
   require_once "./src/db/Connection.php";
+  
+  require_once "./src/auth/AuthStorage.php";
+
   require_once "./src/validations/DescriptionValidation.php";
   require_once "./src/validations/TitleValidation.php";
   require_once "./src/validations/PhotoValidation.php";
-
+  
+  if (!CheckAuth($userRepository)) {
+    header('Location: auth.php');
+  }
+  
   if (isset($_POST['title'])) {
     $title = $_POST['title'];
     $description = $_POST['description'];
@@ -26,7 +34,12 @@
     }
 
     if (!isset($error)) {
-      $result = $postRepository->Insert($_POST);
+      $result = $postRepository->Insert([
+        "title" => $title,
+        "description" => $description,
+        "photo" => $photo,
+        "user_id" => GetToken()
+      ]);
 
       if ($result > 0) {
         $success = 'Пост добавлен!';
