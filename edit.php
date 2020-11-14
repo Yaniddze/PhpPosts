@@ -8,6 +8,17 @@
     $post = $postRepository->GetById($_GET["id"]);
   }
 
+  if (isset($_POST['delete']) && isset($post)) {
+    $result = $postRepository->Delete($_GET["id"]);
+
+    if ($result > 0) {
+      header('Location: index.php');
+    } 
+    else {
+      $error = "Ошибка при удалении";
+    }
+  }
+
   if (isset($_POST['title']) && isset($post)) {
     $title = $_POST['title'];
     $description = $_POST['description'];
@@ -96,6 +107,10 @@
 
       echo '<button type="submit" class="btn btn-primary">Обновить</button>';
 
+      echo '</form>';
+
+      echo '<form class="mt-2" method="post">';
+      echo '<button type="submit" class="btn btn-danger" name="delete">Удалить</button>';
       echo '</form>';
       
     } else {
