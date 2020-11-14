@@ -21,7 +21,24 @@
     <?php 
       $posts = $postRepository->GetAll();
 
-      echo count($posts);
+
+      foreach ($posts as $post) {
+        echo '<div class="card m-3">';
+
+        echo '<img width="200px" src='.$post['photo'].' class="card-img-top" alt="Пост" />';
+        
+        echo '<div class="card-body">';
+
+        echo '<h5 class="cart-title">'.$post['title'].'</h5>';
+        echo '<p class="card-text">'.$post['description'].'</p>';
+        echo '<a class="btn btn-primary mr-3">Обновить</a>';
+        echo '<a class="btn btn-danger">Удалить</a>';
+
+        echo '</div>';
+
+        echo '</div>';
+      }
+
     ?>
   </div>
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
