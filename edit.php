@@ -9,6 +9,12 @@
     header('Location: auth.php');
   }
 
+  if(isset($_POST["exit"])) {
+    DeleteToken();
+
+    header('Location: auth.php');
+  }
+
   if (isset($_GET["id"]) && $_GET["id"] > 0) {
     $tempPost = $postRepository->GetById($_GET["id"]);
 
@@ -81,6 +87,9 @@
 </head>
 <body>
   <div class="container">
+    <form class="float-right m-1" method="post">
+      <button type="submit" name="exit" class="btn btn-danger">Выйти</button>
+    </form>
     <h1>Обновление</h1>
     <div>
       <a 
@@ -96,6 +105,7 @@
         Просмотр
       </a>
     </div>
+  
     <?php 
 
     

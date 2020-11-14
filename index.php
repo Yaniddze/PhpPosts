@@ -5,6 +5,12 @@
   if (!CheckAuth($userRepository)) {
     header('Location: auth.php');
   }
+
+  if(isset($_POST["exit"])) {
+    DeleteToken();
+
+    header('Location: auth.php');
+  }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,6 +21,10 @@
 </head>
 <body>
   <div class="container">
+
+    <form class="float-right m-1" method="post">
+      <button type="submit" name="exit" class="btn btn-danger">Выйти</button>
+    </form>
     <div>
       <a 
         href="./newPost.php"
@@ -24,6 +34,7 @@
       </a>
     </div>
     <div class="row row-cols-2">
+      
       <?php 
         $posts = $postRepository->GetAll();
 

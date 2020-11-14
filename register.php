@@ -74,7 +74,7 @@
       </div>
 
       <button type="submit" class="btn btn-primary">Регистрация</button>
-      <a class="btn btn-primary" href="register.php">Войти</a>
+      <a class="btn btn-primary" href="auth.php">Войти</a>
     </form>
   </div>
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

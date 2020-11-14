@@ -11,6 +11,12 @@
   if (!CheckAuth($userRepository)) {
     header('Location: auth.php');
   }
+
+  if(isset($_POST["exit"])) {
+    DeleteToken();
+
+    header('Location: auth.php');
+  }
   
   if (isset($_POST['title'])) {
     $title = $_POST['title'];
@@ -58,6 +64,10 @@
 </head>
 <body>
   <div class="container">
+
+    <form class="float-right m-1" method="post">
+      <button type="submit" name="exit" class="btn btn-danger">Выйти</button>
+    </form>
     <h1>Добавление</h1>
     <div>
       <a 
