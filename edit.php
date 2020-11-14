@@ -74,6 +74,12 @@
       >
         Домой
       </a>
+      <a 
+        <?php echo 'href="./show.php?id='.$_GET["id"].'"'; ?>
+        class="m-1 btn btn-primary"
+      >
+        Просмотр
+      </a>
     </div>
     <?php 
 
