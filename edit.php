@@ -1,6 +1,6 @@
 <?php 
   require_once "./src/db/Connection.php";
-  require_once "./src/CheckAuth.php";
+  require_once "./src/auth/CheckAuth.php";
   require_once "./src/validations/DescriptionValidation.php";
   require_once "./src/validations/TitleValidation.php";
   require_once "./src/validations/PhotoValidation.php";

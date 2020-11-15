@@ -1,5 +1,5 @@
 <?php 
-  require_once "./src/CheckAuth.php";
+  require_once "./src/auth/CheckAuth.php";
   require_once "./src/db/Connection.php";
   require_once "./src/validations/CommentValidation.php";
 

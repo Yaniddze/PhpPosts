@@ -1,6 +1,6 @@
 <?php
 
-require_once 'auth/AuthStorage.php';
+require_once 'AuthStorage.php';
 
 function CheckAuth($userRepo) {
   $id = GetToken();
