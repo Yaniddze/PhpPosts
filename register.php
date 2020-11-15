@@ -3,6 +3,7 @@
   require_once "./src/auth/CheckAuth.php";
   require_once "./src/validations/LoginValidation.php";
   require_once "./src/validations/PasswordValidation.php";
+  require_once "./src/printers/Alerts.php";
 
   if(CheckAuth($userRepository)) {
     header('Location: index.php');
@@ -57,7 +58,7 @@
     <form method="post">
       <?php 
         if (isset($error)) {
-          echo '<div class="alert alert-danger" role="alert">'.$error.'</div>';
+          echo PrintError($error);
         }
       ?>
       <div class="form-group">

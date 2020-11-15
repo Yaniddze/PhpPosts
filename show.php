@@ -1,5 +1,6 @@
 <?php 
   require_once "./src/auth/CheckAuth.php";
+  require_once "./src/printers/Buttons.php";
   require_once "./src/db/Connection.php";
   require_once "./src/validations/CommentValidation.php";
 
@@ -67,9 +68,7 @@
       
       if (isset($post)) {
         if ($post["user_id"] == GetToken()) {
-          echo '<a href="./edit.php?id='.$_GET["id"].'" class="m-1 btn btn-primary" >';
-          echo 'Редактировать';
-          echo '</a>';
+          echo PrintEditButton($_GET["id"]);
         }
       }    
 

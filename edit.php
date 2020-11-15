@@ -4,6 +4,7 @@
   require_once "./src/validations/DescriptionValidation.php";
   require_once "./src/validations/TitleValidation.php";
   require_once "./src/validations/PhotoValidation.php";
+  require_once "./src/printers/Alerts.php";
 
   if (!CheckAuth($userRepository)) {
     header('Location: auth.php');
@@ -110,11 +111,11 @@
 
     
     if (isset($error)) {
-      echo '<div class="alert alert-danger" role="alert">'.$error.'</div>';
+      echo PrintError($error);
     }
 
     if (isset($success)) {
-      echo '<div class="alert alert-success" role="alert">'.$success.'</div>';
+      echo PrintSuccess($success);
     }
 
     if (isset($post)) {

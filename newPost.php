@@ -1,6 +1,7 @@
 <?php 
   require_once "./src/auth/CheckAuth.php";
   require_once "./src/db/Connection.php";
+  require_once "./src/printers/Alerts.php";
   
   require_once "./src/auth/AuthStorage.php";
 
@@ -81,11 +82,11 @@
     <form method="post">
       <?php 
         if (isset($error)) {
-          echo '<div class="alert alert-danger" role="alert">'.$error.'</div>';
+          echo PrintError($error);
         }
 
         if (isset($success)) {
-          echo '<div class="alert alert-success" role="alert">'.$success.'</div>';
+          echo PrintSuccess($success);
         }
       ?>
       <div class="form-group">

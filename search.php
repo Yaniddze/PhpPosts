@@ -1,6 +1,7 @@
 <?php 
   require_once "./src/db/Connection.php";
   require_once "./src/auth/CheckAuth.php";
+  require_once "./src/printers/Article.php";
 
   if (!CheckAuth($userRepository)) {
     header('Location: auth.php');
@@ -52,24 +53,13 @@
 
         if ($posts != null) {
           foreach ($posts as $post) {
-            echo '<div class="card">';
-  
-            echo '<img src='.$post['photo'].' class="card-img-top" alt="Пост" />';
-            
-            echo '<div class="card-body">';
-  
-            echo '<h5 class="cart-title">'.$post['title'].'</h5>';
-            echo '<p class="card-text">'.$post['description'].'</p>';
-            if ($post["user_id"] == GetToken()) {
-              echo '<a class="btn btn-primary mr-3" href="./edit.php?id='.$post["id"].'">Редактировать</a>';
-            }
-            echo '<a class="btn btn-primary mr-3" href="./show.php?id='.$post["id"].'">Подробнее</a>';
-  
-            
-  
-            echo '</div>';
-  
-            echo '</div>';
+            echo PrintArticle(
+              $post["id"], 
+              $post["user_id"] == GetToken(),
+              $post["photo"],
+              $post["title"],
+              $post["description"]
+            );
           }
         }
       ?>
