@@ -8,14 +8,14 @@ function ValidatePhoto($photo) {
     ];
   }
 
-  if (strlen($photo) >= 150) {
+  if (mb_strlen($photo, 'utf8') >= 150) {
     return [
       'valid' => false, 
       'message' => 'Фото слишком длинное (> 150 символов)'
     ];
   }
 
-  if (strlen($photo) <= 3) {
+  if (mb_strlen($photo, 'utf8') <= 3) {
     return [
       'valid' => false, 
       'message' => 'Фото слишком короткое (< 3 символов)'

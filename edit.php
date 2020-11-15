@@ -1,11 +1,16 @@
 <?php 
   require_once "./src/db/Connection.php";
+
   require_once "./src/auth/CheckAuth.php";
+
   require_once "./src/validations/DescriptionValidation.php";
   require_once "./src/validations/TitleValidation.php";
-  require_once "./src/validations/PhotoValidation.php";
+  require_once "./src/validations/FileValidation.php";
+
   require_once "./src/printers/Alerts.php";
   require_once "./src/printers/EditForm.php";
+
+  require_once "./src/UploadImage.php";
 
   if (!CheckAuth($userRepository)) {
     header('Location: auth.php');
@@ -45,12 +50,10 @@
   if (isset($_POST['title']) && isset($post)) {
     $title = $_POST['title'];
     $description = $_POST['description'];
-    $photo = $_POST['photo'];
+    $photo = $_FILES['photo'];
 
     $titleValidation = ValidateTitle($title);
     $descriptionValidation = ValidateDescription($description);
-    $photoValidation = ValidatePhoto($photo);
-
     if (!$titleValidation['valid']) {
       $error = $titleValidation['message'];
     }
@@ -59,23 +62,45 @@
       $error = $descriptionValidation['message'];
     }
 
-    if (!$photoValidation['valid']) {
-      $error = $photoValidation['message'];
-    }
-
     if (!isset($error)) {
-      $result = $postRepository->Update([
-        "id" => $_GET["id"],
-        "title" => $title,
-        "description" => $description,
-        "photo" => $photo
-      ]);
 
-      if ($result > 0) {
-        $success = 'Пост обновлен!';
-        $post = $postRepository->GetById($_GET["id"]);
-      } else {
-        $error = 'Ошибка при добавлении';
+      if ($photo['size'] == 0) {
+        $result = $postRepository->Update([
+          "id" => $_GET["id"],
+          "title" => $title,
+          "description" => $description,
+          "photo" => $post["photo"]
+        ]);
+
+        if ($result > 0) {
+          $success = 'Пост обновлен!';
+          $post = $postRepository->GetById($_GET["id"]);
+        } else {
+          $error = 'Ошибка при добавлении';
+        }
+      } 
+      else {
+        $fileValidation = ValidateFile($photo);
+        if (!$fileValidation['valid']) {
+          $error = $fileValidation['message'];
+        } 
+        else {
+          $filename = UploadImage($photo);
+
+          $result = $postRepository->Update([
+            "id" => $_GET["id"],
+            "title" => $title,
+            "description" => $description,
+            "photo" => $filename
+          ]);
+
+          if ($result > 0) {
+            $success = 'Пост обновлен!';
+            $post = $postRepository->GetById($_GET["id"]);
+          } else {
+            $error = 'Ошибка при добавлении';
+          }
+        }
       }
     }
   }

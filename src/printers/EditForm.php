@@ -6,7 +6,7 @@ function PrintEditForm(
   $photo
 ){
   return "
-    <form method='post'>
+    <form method='post' enctype='multipart/form-data'>
 
       <div class='form-group'>
         <label for='title-input'>Название</label>
@@ -20,10 +20,14 @@ function PrintEditForm(
 
       <div class='form-group'>
         <label for='photo-input'>Фото</label>
-        <input name='photo' value='".$photo."' class='form-control' id='photo-input' />
+        <input name='photo' type='file' class='form-control' id='photo-input' />
+      </div>
+      
+      <div>
+        <img src='/imgs/".$photo."' alt='Пост' />
       </div>
 
-      <button type='submit' class='btn btn-primary'>Обновить</button>
+      <button type='submit' class='btn btn-primary mt-4'>Обновить</button>
 
     </form>
 

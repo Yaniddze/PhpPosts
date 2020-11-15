@@ -8,7 +8,7 @@ function ValidatePassword($pass) {
     ];
   }
 
-  if (strlen($pass) <= 2) {
+  if (mb_strlen($pass, 'utf8') <= 2) {
     return [
       'valid' => false, 
       'message' => 'Пароль слишком короткий (< 3 символов)'

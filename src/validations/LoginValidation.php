@@ -8,7 +8,7 @@ function ValidateLogin($login) {
     ];
   }
 
-  if (strlen($login) <= 2) {
+  if (mb_strlen($login, 'utf8') <= 2) {
     return [
       'valid' => false, 
       'message' => 'Логин слишком короткий (< 3 символов)'

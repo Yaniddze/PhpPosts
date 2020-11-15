@@ -8,7 +8,7 @@ function ValidateDescription($description) {
     ];
   }
 
-  if (strlen($description) <= 3) {
+  if (mb_strlen($description, 'utf8') <= 3) {
     return [
       'valid' => false, 
       'message' => 'Название слишком короткое (< 3 символов)'

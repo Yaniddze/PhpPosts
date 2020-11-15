@@ -3,7 +3,7 @@
 function ValidateFile($file) {
   $availableExtensions = ['jpg', 'png'];
   
-  if ($file == null) {
+  if ($file == null || $photo['size'] == 0) {
     return [
       'valid' => false,
       'message' => 'Файл не может быть пустым'
