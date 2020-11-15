@@ -5,6 +5,7 @@
   require_once "./src/validations/TitleValidation.php";
   require_once "./src/validations/PhotoValidation.php";
   require_once "./src/printers/Alerts.php";
+  require_once "./src/printers/EditForm.php";
 
   if (!CheckAuth($userRepository)) {
     header('Location: auth.php');
@@ -120,33 +121,14 @@
 
     if (isset($post)) {
 
-      echo '<form method="post">';
-
-      echo '<div class="form-group">';
-      echo '<label for="title-input">Название</label>';
-      echo '<input name="title" value="'.$post["title"].'" class="form-control" id="title-input" />';
-      echo '</div>';
-
-      echo '<div class="form-group">';
-      echo '<label for="description-input">Описание</label>';
-      echo '<textarea name="description" class="form-control" id="description-input">'.$post["description"].'</textarea>';
-      echo '</div>';
-
-      echo '<div class="form-group">';
-      echo '<label for="photo-input">Фото</label>';
-      echo '<input name="photo" value="'.$post["photo"].'" class="form-control" id="photo-input" />';
-      echo '</div>';
-
-      echo '<button type="submit" class="btn btn-primary">Обновить</button>';
-
-      echo '</form>';
-
-      echo '<form class="mt-2" method="post">';
-      echo '<button type="submit" class="btn btn-danger" name="delete">Удалить</button>';
-      echo '</form>';
+      echo PrintEditForm(
+        $post['title'],
+        $post['description'],
+        $post['photo']
+      );
       
     } else {
-      echo '<div class="alert alert-danger" role="alert">Невалидный id</div>';
+      echo PrintError('Невалидный id');
     }
       
     ?>

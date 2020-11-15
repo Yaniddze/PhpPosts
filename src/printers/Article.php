@@ -36,3 +36,32 @@ function PrintArticle(
     </div>
   ";
 } 
+
+function PrintDetailedArticle(
+  $title,
+  $text,
+  $created_time,
+  $photo
+) {
+  return "
+  <div>
+
+    <div>
+      <img src='".$photo."' />
+    </div>
+
+    <div>
+      <h1>".$title."</h1>
+    </div>
+
+    <div>
+      ".$created_time."
+    </div>
+
+    <div style='word-wrap:break-word;'>
+      ".$text."
+    </div>
+
+  </div>
+  ";
+}

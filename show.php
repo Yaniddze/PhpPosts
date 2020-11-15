@@ -1,7 +1,12 @@
 <?php 
   require_once "./src/auth/CheckAuth.php";
+
   require_once "./src/printers/Buttons.php";
+  require_once "./src/printers/Article.php";
+  require_once "./src/printers/Alerts.php";
+
   require_once "./src/db/Connection.php";
+
   require_once "./src/validations/CommentValidation.php";
 
   if (!CheckAuth($userRepository)) {
@@ -78,32 +83,19 @@
     <?php 
 
       if (isset($error)) {
-        echo '<div class="alert alert-danger" role="alert">'.$error.'</div>';
+        echo PrintError($error);
       }
 
       if (isset($post)) {
-        echo '<div>';
-
-          echo '<div>';
-            echo '<img src="'.$post["photo"].'" />';
-          echo '</div>';
-
-          echo '<div>';
-            echo '<h1>'.$post["title"].'</h1>';
-          echo '</div>';
-
-          echo '<div>';
-            echo $post["created_time"];
-          echo '</div>';
-
-          echo '<div style="word-wrap:break-word;">';
-            echo $post["description"];
-          echo '</div>';
-
-        echo '</div>';
+        echo PrintDetailedArticle(
+          $post["title"],
+          $post["description"],
+          $post["created_time"],
+          $post["photo"]
+        );
         
       } else {
-        echo '<div class="alert alert-danger" role="alert">Невалидный id</div>';
+        echo PrintError('Невалидный id');
       }
 
     ?>
