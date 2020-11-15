@@ -8,6 +8,9 @@
   require_once "./src/validations/DescriptionValidation.php";
   require_once "./src/validations/TitleValidation.php";
   require_once "./src/validations/PhotoValidation.php";
+  require_once "./src/validations/FileValidation.php";
+
+  require_once "./src/UploadImage.php";
   
   if (!CheckAuth($userRepository)) {
     header('Location: auth.php');
@@ -22,11 +25,11 @@
   if (isset($_POST['title'])) {
     $title = $_POST['title'];
     $description = $_POST['description'];
-    $photo = $_POST['photo'];
+    $photo = $_FILES['photo'];
 
     $titleValidation = ValidateTitle($title);
     $descriptionValidation = ValidateDescription($description);
-    $photoValidation = ValidatePhoto($photo);
+    $fileValidation = ValidateFile($photo);
 
     if (!$titleValidation['valid']) {
       $error = $titleValidation['message'];
@@ -36,15 +39,17 @@
       $error = $descriptionValidation['messsage'];
     }
 
-    if (!$photoValidation['valid']) {
-      $error = $photoValidation['message'];
+    if (!$fileValidation['valid']) {
+      $error = $fileValidation['message'];
     }
 
     if (!isset($error)) {
+      $filename = UploadImage($photo);
+
       $result = $postRepository->Insert([
         "title" => $title,
         "description" => $description,
-        "photo" => $photo,
+        "photo" => $filename,
         "user_id" => GetToken()
       ]);
 
@@ -79,7 +84,7 @@
       </a>
     </div>
 
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
       <?php 
         if (isset($error)) {
           echo PrintError($error);
@@ -99,7 +104,7 @@
       </div>
       <div class="form-group">
         <label for="photo-input">Фото</label>
-        <input name="photo" type="text" class="form-control" id="photo-input" />
+        <input name="photo" type="file" class="form-control" id="photo-input" />
       </div>
       <button type="submit" class="btn btn-primary">Добавить</button>
     </form>

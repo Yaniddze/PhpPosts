@@ -15,7 +15,7 @@ function PrintArticle(
   ) {
   return "
     <div class='card' style='border: ".$border."'>
-      <img src='".$photoPath."' class='card-img-top' alt='Пост' />
+      <img src='/imgs/".$photoPath."' class='card-img-top' alt='Пост' />
     
       <div class='card-body'>
 
@@ -47,7 +47,7 @@ function PrintDetailedArticle(
   <div>
 
     <div>
-      <img src='".$photo."' />
+      <img src='/imgs/".$photo."' />
     </div>
 
     <div>
