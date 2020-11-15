@@ -55,6 +55,7 @@
 </head>
 <body>
   <div class="container">
+    <h1>Регистрация</h1>
     <form method="post">
       <?php 
         if (isset($error)) {

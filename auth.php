@@ -1,6 +1,6 @@
 <?php 
   require_once "./src/db/Connection.php";
-  require_once "./src/CheckAuth.php";
+  require_once "./src/auth/CheckAuth.php";
   require_once "./src/validations/LoginValidation.php";
   require_once "./src/validations/PasswordValidation.php";
   require_once "./src/printers/Alerts.php";
@@ -45,6 +45,7 @@
 </head>
 <body>
   <div class="container">
+    <h1>Войти</h1>
     <form method="post">
       <?php 
         if (isset($error)) {
